@@ -1,4 +1,5 @@
 import random 
+from random import randint
 
 
 ##Game Parameter
@@ -7,6 +8,35 @@ import random
 
 num_dig = 3
 max_guess = 10
+
+
+def get_secret_num():
+    ##secret_num = ''.join(["{}".format(randint(0, 9)) for num in range(0, num_dig)])
+    secret_num = '123'
+    return secret_num
+
+def get_clues(guess, secret_num):
+    ## Returns string hint based on the guess and the secret number
+
+    ## Case for when the player gets the answer right
+    if guess == secret_num:
+        return "You Got It!"
+    
+    clues = []
+
+    for i in range(len(guess)):
+        if guess[i] == secret_num[i]:
+            clues.append('Fermi')
+        elif guess[i] in secret_num:
+            clues.append('Pico')
+    if len(clues) == 0:
+        return 'Bagels'
+    else:
+        clues.sort()
+        return ' '.join(clues)
+
+
+
 
 def main ():
     print('''Bagels, a deductive logic game.
@@ -28,13 +58,27 @@ while True: #game loop
     print('I have thought up a number.')
     print(' You have {} guesses to get it.'.format(max_guess))
     num_guess = 1 
-    break
+    while num_guess <= max_guess:
+        guess = ''
+        ## Make sure guess is valid, (correct length, not a decimal and a number)
+        while len(guess) != num_dig or not guess.isdecimal():
+            print('Guess #{}: '.format(num_guess))
+            guess = input('> ')
+        clues = get_clues(guess,secret_num)
+        print(clues)
+        num_guess += 1
 
+        if guess == secret_num:
+            break
 
-def get_secret_num():
-    secret_num = 1
-    return secret_num
-
+        if num_guess > max_guess:
+            print("You ran out of guesses.")
+            print('The answer was {}.'.format(secret_num))
+            print('Do you want to play again? (yes or no)')
+        if not input('> ').lower().startswith('y'):
+            break
+    print('Thanks for playing!')
+    
 
 
 if __name__ == '__main__':
