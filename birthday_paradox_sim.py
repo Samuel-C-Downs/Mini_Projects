@@ -17,7 +17,7 @@ def gen_bdays(num_bdays):
 
 def match_bday(bdays):
     if len(bdays) == len(set(bdays)):
-        print("There are no matching birthdays in this group")
+        ##print("There are no matching birthdays in this group")
         return None
 
     for a, bday_A in enumerate(bdays):
@@ -66,3 +66,28 @@ if match != None:
     print('multiple people have a birthday on', dateText)
 else:
     print("There are no matches")
+
+print('Generating', num_bdays, 'random birthdays 100,000 times...')
+input('Press Enter to begin...')
+
+print('Let\'s run another 100,000 simulations.')
+
+simMatch = 0 
+
+for i in range(100000):
+
+    if i % 10000 == 0:
+        print(i, "simulations run...")
+
+    birthdays = gen_bdays(num_bdays)
+    if match_bday(birthdays) != None:
+        simMatch += 1
+
+print('100,000 simulations run.')
+
+probability = round(simMatch / 100000 * 100, 2)
+print('Out of 100,000 simulations of', num_bdays, 'people, there was a')
+print('matching birthday in that group', simMatch, 'times. This means')
+print('that', num_bdays, 'people have a', probability, '% chance of')
+print('having a matching birthday in their group.')
+print('That\'s probably more than you would think!')
