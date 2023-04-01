@@ -40,4 +40,29 @@ while True:
 print("")
 
 print("Here are", num_bdays, "randomly generated bithdays:" )
+
+## Generate list of bdays and assign to variable
 birthdays = gen_bdays(num_bdays)
+for i, bday in enumerate(birthdays):
+    if i != 0:
+        print(", ", end="")
+    month_text = MONTHS[bday.month-1]
+    date_text = "{} {}".format(month_text, bday.day)
+    print(date_text, end ="")
+
+print("")
+print("")
+
+
+## Check for matches in list of generated bdays
+match = match_bday(birthdays)
+
+## Display the results
+print("In this simulation, ", end = "")
+
+if match != None: 
+    monthName = MONTHS[match.month - 1]
+    dateText = '{} {}'.format(monthName, match.day)
+    print('multiple people have a birthday on', dateText)
+else:
+    print("There are no matches")
